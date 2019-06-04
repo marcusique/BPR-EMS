@@ -59,8 +59,9 @@
       <strong>Labor hours:</strong> <%= task.laborHours %> <br />
       <strong>Required staff:</strong> <%= task.requiredStaff %> <br />
       <strong>Enrolled staff: </strong> <%
-      task.enrolledStaff.forEach(staffMember => { %> <%=staffMember.firstName %>
-      | <% }) %> <br />
+      task.enrolledStaff.forEach(staffMember => { %>
+      <a class="css-button-rounded"> <%= staffMember.firstName %></a>
+      <%})%> <br />
       <strong>Notes:</strong> <%= task.notes %> <br />
     </div>
   </div>

@@ -1,0 +1,41 @@
+<% include ../partials/header %>
+<h3 class="newFormHeading">Create a new client</h3>
+
+<div class="row">
+  <form
+    class="col s6 offset-s3"
+    action="/clients/new"
+    method="POST"
+    id="new-employee-form"
+  >
+    <div class="row">
+      <div class="input-field col s6" id="fname">
+        <input type="text" name="name" class="validate" />
+        <label for="name">Name</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="postalCode" class="validate" />
+        <label for="postalCode">Postal code</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="city" class="validate" />
+        <label for="city">City</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="addressLine" class="validate" />
+        <label for="addressLine">Address</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="phoneNumber" class="validate" />
+        <label for="phoneNumber">Phone number</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="email" name="email" class="validate" />
+        <label for="email">Email</label>
+      </div>
+      <button class="waves-effect blue darken-3 btn">Create</button>
+      <a href="javascript:history.back()" class="waves-effect blue darken-3 btn">Cancel</a>
+    </div>
+  </form>
+</div>
+<% include ../partials/footer %>

@@ -1,0 +1,80 @@
+<% include ../partials/header %>
+<h1>Client Directory</h1>
+<!-- the floating action button -->
+<div class="row">
+  <div class="col s12 m6 l3">
+    <div class="fixed-action-btn">
+
+      <a
+        id=""
+        class="btn-floating btn-large waves-effect waves-light blue"
+        href="/clients/new"
+      >
+        <i class="material-icons">add</i></a
+      >
+
+    </div>
+  </div>
+</div>
+
+<% clients.forEach((client) => { %>
+<div class="row">
+  <div class="col s12 m6 l3 ">
+    <div class="card blue lighten-5">
+      <div class="card-content black-text">
+        <span class="card-title">
+          <strong><%= client.name %> </strong>
+        </span>
+        <p>
+          <strong>Phone number: </strong><%= client.phoneNumber %> <br />
+          <strong> Email: </strong><%= client.email%> %>
+        </p>
+      </div>
+      <div class="card-action">
+        <a class="blue-text modal-trigger" href="#modal <%= client._id %>"
+          >Show more info</a
+        >
+        <% if(currentUser && currentUser.userRole == 'Admin'){ %>
+        <a class="blue-text" href="/clients/<%=client._id%>/edit">Edit</a>
+        <%}%>
+      </div>
+    </div>
+  </div>
+  <% }); %>
+</div>
+
+<% clients.forEach(client => { %>
+<div id="modal <%= client._id %>" class="modal">
+  <div class="modal-content">
+    <h4>
+      <strong><%= client.name %></strong>
+    </h4>
+    <p>
+      <strong>Address:</strong> <%= client.address.postalCode + ' ' +
+      client.address.city + ' ' + client.address.addressLine %> <br />
+      <strong>Email:</strong> <%= client.email %> <br />
+      <strong>Phone number:</strong> <%= client.phoneNumber %> <br />
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+<% }); %> <% include ../partials/footer %>
+
+<!-- Modal initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+</script>
+<!-- Floating Action Button initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, 'right');
+  });
+</script>
+
+<% include ../partials/footer %>

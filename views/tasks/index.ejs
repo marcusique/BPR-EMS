@@ -1,0 +1,86 @@
+<% include ../partials/header %>
+<h1>Task Directory</h1>
+<!-- floating action button -->
+<div class="row">
+  <div class="col s12 m6 l3">
+    <div class="fixed-action-btn">
+      <% if(currentUser && currentUser.userRole == 'Admin'){ %>
+      <a
+        id=""
+        class="btn-floating btn-large waves-effect waves-light blue"
+        href="/tasks/new"
+      >
+        <i class="material-icons">add</i></a
+      >
+      <%}%>
+    </div>
+  </div>
+</div>
+
+<% tasks.forEach(task => { %>
+<div class="row">
+  <div class="col s12 m6 l3 ">
+    <div class="card blue lighten-5">
+      <div class="card-content black-text">
+        <span class="card-title">
+          <strong><%= task.name %> </strong>
+        </span>
+        <p>
+          <strong>Date: </strong><%= task.date.toString().substring(0,16) %>
+          <br />
+          <strong>Time: </strong><%= task.time %>
+        </p>
+      </div>
+      <div class="card-action">
+        <a class="blue-text modal-trigger" href="#modal <%= task._id %>"
+          >Show more info</a
+        >
+        <a class="blue-text" href="/tasks/<%=task._id%>/edit">Edit</a>
+      </div>
+    </div>
+  </div>
+  <% }); %>
+</div>
+
+<% tasks.forEach(task => { %>
+<div id="modal <%= task._id %>" class="modal">
+  <div class="modal-content">
+    <h4>
+      <strong><%= task.name %></strong>
+    </h4>
+    <div>
+      <%if(task.assignedToClient){ %>
+      <strong>Client:</strong> <%= task.assignedToClient.name %> <br />
+      <%}%>
+      <strong>Address:</strong> <%= task.address.postalCode + ' ' +
+      task.address.city + ' ' + task.address.addressLine %> <br />
+      <strong>Date:</strong> <%= task.date.toString().substring(0,16) %> <br />
+      <strong>Time:</strong> <%= task.time %> <br />
+      <strong>Labor hours:</strong> <%= task.laborHours %> <br />
+      <strong>Required staff:</strong> <%= task.requiredStaff %> <br />
+      <strong>Enrolled staff: </strong> <%
+      task.enrolledStaff.forEach(staffMember => { %> <%=staffMember.firstName %>
+      | <% }) %> <br />
+      <strong>Notes:</strong> <%= task.notes %> <br />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+<% }); %> <% include ../partials/footer %>
+
+<!-- Modal initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+</script>
+<!-- Floating Action Button initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, 'right');
+  });
+</script>

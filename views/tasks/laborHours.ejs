@@ -1,0 +1,20 @@
+<% include ../partials/header %>
+<h1>Allocate labor hours</h1>
+
+<div class="row">
+  <form
+    class="col l2 m4 s5 offset-l5 offset-m5 offset-s4"
+    action="/tasks/<%=task._id%>/assignLaborHours"
+    method="post"
+    id="assign-labor-hours"
+  >
+    <%task.enrolledStaff.forEach(e => {%>
+    <input name="<%=e._id%>" value="<%=task.laborHours%>" />
+    <label><%=e.firstName%></label>
+    <%}) %>
+    <div>
+      <button id="submit-labor-hours" class="btn-small blue darken-3 waves-effect">Submit</button>
+    </div>
+  </form>
+</div>
+<% include ../partials/footer %>

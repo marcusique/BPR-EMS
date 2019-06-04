@@ -1,0 +1,139 @@
+<% include ../partials/header %>
+<h4>Edit employee</h4>
+
+<div class="row">
+  <form
+    class="col s6 offset-s3"
+    action="/employees/<%=employee._id%>/?_method=PUT"
+    method="POST"
+    id="new-employee-form"
+  >
+    <div class="row">
+      <div class="input-field col s6" id="fname">
+        <input
+          type="text"
+          name="employee[firstName]"
+          class="validate"
+          value="<%=employee.firstName%>"
+        />
+        <label for="firstName">First Name</label>
+      </div>
+      <div class="input-field col s6" id="lname">
+        <input
+          type="text"
+          name="employee[lastName]"
+          class="validate"
+          value="<%=employee.lastName%>"
+        />
+        <label for="lastName">Last Name</label>
+      </div>
+      <div class="input-field col s6" id="username">
+        <input
+          placeholder="Username"
+          type="text"
+          name="employee[username]"
+          class="validate"
+          value="<%=employee.username%>"
+        />
+        <label for="username">Username</label>
+      </div>
+      <div class="input-field col s6">
+        <select name="employee[userRole]" type="text">
+          <% if(employee.userRole && employee.userRole === 'Cleaner'){ %>
+          <option selected value="<%=employee.userRole%>"
+            ><%=employee.userRole%></option
+          >
+          <option value="Manager">Manager</option>
+          <option value="Admin">Admin</option>
+          <%}%> <% if (employee && employee.userRole === 'Manager'){%>
+          <option value="Cleaner">Cleaner</option>
+          <option selected value="<%=employee.userRole%>"
+            ><%=employee.userRole%></option
+          >
+          <option value="Admin">Admin</option>
+          <%}%> <% if (employee && employee.userRole ==='Admin'){%>
+          <option value="Cleaner">Cleaner</option>
+          <option value="Manager">Manager</option>
+          <option selected value="<%=employee.userRole%>"
+            ><%=employee.userRole%></option
+          >
+          <%}%>
+        </select>
+        <label>User role</label>
+      </div>
+
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="employee[address.postalCode]"
+          class="validate"
+          value="<%=employee.address.postalCode%>"
+        />
+        <label for="postalCode">Postal code</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="employee[address.city]"
+          class="validate"
+          value="<%=employee.address.city%>"
+        />
+        <label for="city">City</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="employee[address.addressLine]"
+          class="validate"
+          value="<%=employee.address.addressLine%>"
+        />
+        <label for="addressLine">Address</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="employee[phoneNumber]"
+          class="validate"
+          value="<%=employee.phoneNumber%>"
+        />
+        <label for="phoneNumber">Phone number</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="email"
+          name="employee[email]"
+          class="validate"
+          value="<%=employee.email%>"
+        />
+        <label for="email">Email</label>
+      </div>
+      <div class="input-field col s6">
+        <input disabled id="disabled" type="text" class="validate" />
+        <label for="disabled">Password</label>
+      </div>
+      <button class="waves-effect blue darken-3 btn">Update</button>
+      <a href="javascript:history.back()" class="waves-effect blue darken-3 btn">Cancel</a>
+    </div>
+  </form>
+  <form
+    class="col s6 offset-s3"
+    action="/employees/<%= employee._id %>?_method=DELETE"
+    method="POST"
+  >
+    <div class="row">
+      <button class="waves-effect deep-orange darken-3 btn">
+        Delete employee
+      </button>
+    </div>
+  </form>
+</div>
+
+<!--Select user role-->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let elems = document.querySelectorAll('select');
+    let instances = M.FormSelect.init(elems);
+  });
+</script>
+
+<% include ../partials/footer %>

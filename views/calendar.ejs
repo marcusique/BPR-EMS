@@ -1,0 +1,420 @@
+<% include partials/header %>
+<div class="row">
+    <div class="col l12">
+        <div class="col l8" id="card">
+            <button
+                    class="btn-small waves-effect white"
+                    id="previous"
+                    onclick="previous()"
+            >
+                <i class="material-icons">navigate_before</i>
+            </button>
+            <h4 class="card-title" id="monthAndYear"></h4>
+            <button class="btn-small waves-effect white" id="next" onclick="next()">
+                <i class="material-icons" id="next">navigate_next</i>
+            </button>
+
+            <form class="input-field " id="selectYear">
+                <!-- <label for="month">Jump To: </label> -->
+                <select
+                        class=" col s4  "
+                        name="month"
+                        id="month"
+                        onchange="jump()"
+                >
+                    <option value="0">Jan</option>
+                    <option value="1">Feb</option>
+                    <option value="2">Mar</option>
+                    <option value="3">Apr</option>
+                    <option value="4">May</option>
+                    <option value="5">Jun</option>
+                    <option value="6">Jul</option>
+                    <option value="7">Aug</option>
+                    <option value="8">Sep</option>
+                    <option value="9">Oct</option>
+                    <option value="10">Nov</option>
+                    <option value="11">Dec</option>
+                </select>
+
+                <label for="year"></label
+                ><select
+                        class="   col s4"
+                        name="year"
+                        id="year"
+                        onchange="jump()"
+                >
+                    <option value="1990">1990</option>
+                    <option value="1991">1991</option>
+                    <option value="1992">1992</option>
+                    <option value="1993">1993</option>
+                    <option value="1994">1994</option>
+                    <option value="1995">1995</option>
+                    <option value="1996">1996</option>
+                    <option value="1997">1997</option>
+                    <option value="1998">1998</option>
+                    <option value="1999">1999</option>
+                    <option value="2000">2000</option>
+                    <option value="2001">2001</option>
+                    <option value="2002">2002</option>
+                    <option value="2003">2003</option>
+                    <option value="2004">2004</option>
+                    <option value="2005">2005</option>
+                    <option value="2006">2006</option>
+                    <option value="2007">2007</option>
+                    <option value="2008">2008</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                </select>
+            </form>
+
+            <table class="col l12 centered" id="calendar">
+                <thead>
+                <tr>
+
+                    <th id="Cth">Mon</th>
+                    <th id="Cth">Tue</th>
+                    <th id="Cth">Wed</th>
+                    <th id="Cth">Thu</th>
+                    <th id="Cth">Fri</th>
+                    <th id="Cth">Sat</th>
+                    <th id="Cth">Sun</th>
+                </tr>
+                </thead>
+                <tbody class="blue lighten-5" id="calendar-body"></tbody>
+            </table>
+
+
+            <br/>
+
+        </div>
+        <% if(task){ %>
+            <div class="card col l4 pull-l0" id="taskMain">
+                <div class="taskMainHeader">
+                    <h4 class=" mainTaskName"><%= task.name %>
+                        <% if(currentUser && currentUser.userRole == 'Admin' || currentUser &&
+                            currentUser.userRole == 'Manager') {%>
+                                <span>
+                                    <a href="/tasks/<%= task._id %>/edit" id="editTaskButton " onclick="">
+                                        <i class="material-icons edit"> edit </i>
+                                    </a>
+                                </span>
+                        <%}%>
+                    </h4>
+
+                </div>
+
+                <div class="card" id="innerTask">
+                    <p class="textField">
+                        <% if(task.assignedToClient){ %>
+                        <strong> Client: </strong> <%= task.assignedToClient.name %> <br/>
+                        <% } %>
+
+                        <strong>Address: </strong><%= task.address.postalCode %> <%= task.address.city %> <%= task.address.addressLine %></br>
+                        <strong>Date:</strong> <%= task.date.toString().substring(0, 15) %> </br>
+                        <strong>Time: </strong><%= task.time %></br>
+                        <strong>Labor hours: </strong><%= task.laborHours %></br>
+                        <strong>Required Staff: </strong><%= task.requiredStaff %> </br>
+                        <strong>Enrolled Staff: </strong>
+
+                        <%
+                        task.enrolledStaff.forEach((staffMember) => { %>
+                            <a class="css-button-rounded"> <%= staffMember.firstName %></a>
+                        <% }) %>
+                    </p>
+
+                    <br/>
+                    <p class="textField">
+                        <strong>Notes: </strong><%= task.notes %></br>
+                    </p>
+
+
+                    <!-- START : CHECK IF CURRENT USER HAS ALREADY APPLIED FOR A TASK -->
+                    <div class="buttonsContainer ">
+                        <% if((!applications.some(a => currentUser._id.toString() == a.applicant && a.isActive)) && (!task.enrolledStaff.some(s => currentUser._id.toString() == s._id))){ %>
+                            <form class="col s6" method="post" action="/tasks/<%= task._id %>/apply">
+                                <input type="hidden" name="taskId" value="<%= task._id %>">
+                                <button class="waves-effect blue darken-3 btn-small">Apply</button>
+                            </form>
+                        <% } else { %>
+                            <button disabled>Applied</button>
+                        <% } %>
+                        <!-- END : CHECK IF CURRENT USER HAS ALREADY APPLIED FOR A TASK -->
+
+                        <!-- Display Labor hours button -->
+                        <% if( currentUser.userRole == 'Admin' || currentUser.userRole == 'Manager'){ %>
+                        <a href="/tasks/<%= task._id %>/laborhours"
+                           class="waves-effect blue darken-3 btn-small col s6  " onclick="">Approve Labor hours</a>
+                        <% } %>
+                    </div>
+
+                </div>
+                <div class="card " id="comments">
+                    <h4 class="card-title">Comments</h4>
+                    <p>
+                        <% task.comments.forEach(comment => { %>
+
+
+                    <div id="commentText">
+                        <strong><%= comment.author.username %></strong>: <%= comment.text %>
+                        <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser.userRole == 'Admin' || currentUser.userRole == 'Manager'){ %>
+                        <form action="/tasks/<%= task._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                            <input class="deleteButton" type="submit" value="Delete">
+                        </form>
+                        <% } %>
+                    </div>
+
+                    <% }) %>
+                    <form class="col s8" id="post" action="/tasks/<%= task._id %>/comments" method="POST">
+                        <input class="materialize-textarea" type="text" name="comment[text]"
+                               placeholder="Type a new comment..."></input>
+                        <button id="CommentButton" class="waves-effect blue darken-3 btn-small" type="submit"
+                                id="postButton">
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </form>
+                    </p>
+                </div>
+            </div>
+        <% } %>
+
+        <!-- Float action button -->
+        <% if( currentUser.userRole == 'Admin'){ %>
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue">
+              <i class="large material-icons">add</i>
+            </a>
+            <ul>
+              <li><a href="/employees/new" class="btn-floating red tooltipped" data-position="top" data-tooltip="Add new employee"><i class="material-icons">person_add</i></a></li>
+              <li><a href="/clients/new" class="btn-floating orange darken-1 tooltipped" data-position="top" data-tooltip="Add new client"><i class="material-icons">group_add</i></a></li>
+              <li><a href="tasks/new" class="btn-floating green tooltipped" data-position="top" data-tooltip="Add new task"><i class="material-icons">note_add</i></a></li>
+            </ul>
+          </div>
+          <%} else if(currentUser.userRole == 'Manager'){ %>
+            <div class="fixed-action-btn">
+                    <a class="btn-floating btn-large blue darken-3">
+                      <i class="large material-icons">mode_edit</i>
+                    </a>
+                    <ul>
+                      <li><a href="tasks/new" class="btn-floating green tooltipped" data-position="top" data-tooltip="Add new task"><i class="material-icons">note_add</i></a></li>
+                    </ul>
+                  </div>
+
+            <%}%>
+
+    </div>
+</div>
+
+<!-- Tooltip init -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+  });
+  </script>
+
+<!-- Horizontal FAB -->
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems, {
+      direction: 'left'
+    });
+  });
+
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+    });
+</script>
+
+<script defer>
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+    let selectYear = document.getElementById('year');
+    let selectMonth = document.getElementById('month');
+    let allTasks = <%- JSON.stringify(tasks) %>;
+
+    let months = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+    ];
+
+    let monthAndYear = document.getElementById('monthAndYear');
+    showCalendar(currentMonth, currentYear);
+
+    function getNumberOfWeek(year, month, day) {
+        let date = `${year}/${month}/${day}`;
+        const today = new Date(date);
+        const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+        const pastDaysOfYear = (today - firstDayOfYear) / 86400000;
+        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+    }
+
+    function next() {
+        currentYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+        currentMonth = (currentMonth + 1) % 12;
+        showCalendar(currentMonth, currentYear);
+    }
+
+    function previous() {
+        currentYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+        currentMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+        showCalendar(currentMonth, currentYear);
+    }
+
+    function jump() {
+        currentYear = parseInt(selectYear.value);
+        currentMonth = parseInt(selectMonth.value);
+        showCalendar(currentMonth, currentYear);
+    }
+
+    function isLeapYear(year) {
+        return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+    }
+
+    function showCalendar(month, year) {
+        let firstDay = function () {
+            let first_day = new Date(year, month);
+
+            return (first_day_weekday =
+                first_day.getDay() == 0 ? 7 : first_day.getDay());
+        };
+        let daysInMonth = 32 - new Date(year, month, 32).getDate();
+
+        let tbl = document.getElementById('calendar-body'); // body of the calendar
+
+        // clearing all previous cells
+        tbl.innerHTML = '';
+
+        // filing data about month and in the page via DOM.
+        monthAndYear.innerHTML = months[month] + ' ' + year;
+        selectYear.value = year;
+        selectMonth.value = month;
+
+        // creating all cells
+        let date = 1;
+        for (let i = 0; i < 6; i++) {
+            // creates a table row
+            let row = document.createElement('tr');
+
+
+            //creating individual cells, filing them up with data.
+            for (let j = 1; j < 8; j++) {
+                if (i === 0 && j < firstDay()) {
+                    let cell = document.createElement('td');
+                    cell.setAttribute('class', 'td-day')
+                    let cellText = document.createTextNode('');
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                } else if (date > daysInMonth) {
+                    break;
+                } else {
+                    let cell = document.createElement('td');
+                    cell.setAttribute('class', 'td-day')
+                    let div = document.createElement("div");
+                    let cellText = document.createTextNode(date);
+                    div.appendChild(cellText);
+                    div.setAttribute("class", "css-day-text")
+                    if (j === 1) {
+                        let weekText = document.createTextNode(
+                            ' ' + getNumberOfWeek(year, month + 1, date) + ' '
+                        );
+                        let divWeek = document.createElement("div");
+                        divWeek.appendChild(weekText);
+                        divWeek.setAttribute("class", "css-week-text")
+                        cell.appendChild(divWeek);
+                    }
+                    for (let i = 0; i < allTasks.length; i++) {
+                        let elem = allTasks[i];
+                        // Formatting date (from UTC to local)
+                        let localDate = new Date(elem.date);
+                        let formattedDate =
+                            localDate.getFullYear() +
+                            '-' +
+                            (localDate.getMonth() + 1) +
+                            '-' +
+                            localDate.getDate();
+                        // Formatting day
+                        let substringDay = formattedDate.substring(7, 9);
+                        let parsedDay = parseInt(substringDay, 10);
+                        //formatting month
+                        let substringMonth = formattedDate.substring(5, 7);
+                        let parsedMonth = parseInt(substringMonth, 10);
+                        //formatting year
+                        let substringYear = formattedDate.substring(0, 4);
+                        let parsedYear = parseInt(substringYear, 10);
+                        //setting true month and year
+                        let trueMonth = parseInt(selectMonth.value, 10) + 1;
+                        let trueYear = parseInt(selectYear.value, 10);
+                        if (
+                            parsedDay === date &&
+                            parsedMonth === trueMonth &&
+                            parsedYear === trueYear
+                        ) {
+                            // let containerDIV = document.createElement('div');
+                            // containerDIV.setAttribute("class","css-container-div")
+                            let taskdiv = document.createElement("div");
+                            let taskDetail = document.createElement('a');
+                            taskdiv.appendChild(taskDetail);
+                            // containerDIV.innerHTML =taskDetail;
+                            taskDetail.setAttribute('class', 'css-button-rounded');
+                            let taskText = document.getElementsByClassName('css-button-rounded');
+                            taskDetail.innerHTML = elem.name;
+                            taskDetail.setAttribute('href', '/tasks/' + elem._id);
+                            cell.appendChild(taskdiv);
+                        }
+                    }
+                    if (
+                        date === today.getDate() &&
+                        year === today.getFullYear() &&
+                        month === today.getMonth()
+                    ) {
+                        cell.classList.add('blue');
+                    } // color today's date
+                    cell.appendChild(div);
+
+                    row.appendChild(cell);
+                    date++;
+                }
+            }
+
+            tbl.appendChild(row); // appending each row into calendar body.
+        }
+    }
+</script>
+<% include partials/footer %>

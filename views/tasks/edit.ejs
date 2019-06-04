@@ -1,0 +1,155 @@
+<% include ../partials/header %>
+<h4 class="flow-text ">Edit task</h4>
+
+<div class="row">
+  <form
+    class="col s6 offset-s3"
+    action="/tasks/<%=task._id%>/?_method=PUT"
+    method="POST"
+    id="edit-task-form"
+  >
+    <div class="row">
+      <div class="input-field col s6" id="fname">
+        <input
+          type="text"
+          name="task[name]"
+          value="<%=task.name %>"
+          class="validate"
+        />
+        <label for="name">Name</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="task[address.postalCode]"
+          value="<%=task.address.postalCode %>"
+          class="validate"
+        />
+        <label for="task[address.postalCode]">Postal code</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="task[address.city]"
+          value="<%=task.address.city%>"
+          class="validate"
+        />
+        <label for="city">City</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="task[address.addressLine]"
+          value="<%=task.address.addressLine %>"
+          class="validate"
+        />
+        <label for="addressLine">Address</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="task[date]"
+          value="<%=task.date.toString().substring(0,16)%>"
+          class="datepicker"
+        />
+        <label for="date">Date</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="task[time]"
+          value="<%=task.time%>"
+          class="timepicker"
+        />
+        <label for="time">Time</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="task[laborHours]"
+          value="<%=task.laborHours%>"
+        />
+        <label for="laborHours">Labor hours</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="task[requiredStaff]"
+          value="<%=task.requiredStaff%>"
+        />
+        <label for="requiredStaff">Required staff</label>
+      </div>
+      <div class="input-field col s12">
+        <select name="task[enrolledStaff]" multiple>
+          <% employees.forEach(e => { %> <% if(task.enrolledStaff.some( s =>
+          s._id.equals(e._id))){%>
+          <option selected value="<%= e._id %>"
+            ><%= e.firstName + ' ' + e.lastName %></option
+          >
+          <% } else {%>
+          <option value="<%= e._id %>"
+            ><%= e.firstName + ' ' + e.lastName%></option
+          >
+          <% }%> <%});%>
+        </select>
+        <label>Select employees to enroll</label>
+      </div>
+
+      <div class="input-field col s12">
+        <select name="task[assignedToClient]" id="selectClient" multiple>
+          <% clients.forEach(c => { %> <%if(task.assignedToClient &&
+          task.assignedToClient._id.equals(c._id)){%>
+          <option selected value="<%= c._id %>"><%= c.name %></option>
+          <% } else {%>
+          <option value="<%= c._id %>"><%= c.name%></option>
+          <% }%> <%});%>
+        </select>
+        <label>Select clients to assign</label>
+      </div>
+
+      <div class="input-field col s12">
+        <input type="text" name="task[notes]" value="<%=task.notes%>" />
+        <label for="notes">Notes</label>
+      </div>
+      <button class="waves-effect blue darken-3 btn">Edit</button>
+      <a href="javascript:history.back()" class="waves-effect blue darken-3 btn">Cancel</a>
+    </div>
+  </form>
+  <form
+    class="col s6 offset-s3"
+    action="/tasks/<%= task._id %>?_method=DELETE"
+    method="POST"
+  >
+    <div class="row">
+      <button class="waves-effect deep-orange darken-3 btn">
+        Delete task
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Date picker initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems);
+  });
+</script>
+
+<!-- Time picker initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.timepicker');
+    var instances = M.Timepicker.init(elems, { twelveHour: false });
+  });
+</script>
+
+<!-- Multiple select initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+  });
+</script>
+
+<% include ../partials/footer %>

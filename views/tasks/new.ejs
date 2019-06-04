@@ -1,0 +1,99 @@
+<% include ../partials/header %>
+<h3 class="newFormHeading">Create new task</h3>
+
+<div class="row">
+  <form
+    class="col s6 offset-s3"
+    action="/tasks/new"
+    method="POST"
+    id="new-task-form"
+  >
+    <div class="row">
+      <div class="input-field col s6" id="fname">
+        <input type="text" name="name" class="validate" />
+        <label for="name">Name</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="postalCode" class="validate" />
+        <label for="postalCode">Postal code</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="city" class="validate" />
+        <label for="city">City</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="addressLine" class="validate" />
+        <label for="addressLine">Address</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="date" class="datepicker" />
+        <label for="date">Date</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="time" class="timepicker" />
+        <label for="time">Time</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="laborHours" />
+        <label for="laborHours">Labor hours</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="requiredStaff" />
+        <label for="requiredStaff">Required staff</label>
+      </div>
+      <div class="input-field col s12">
+        <select name="enrolledStaff[]" multiple>
+          <% employees.forEach(employee => { %>
+          <option value="<%= employee._id %>"
+            ><%= employee.firstName + ' ' + employee.lastName %></option
+          >
+          <% }); %>
+        </select>
+        <label>Select employees to enroll</label>
+      </div>
+      <!-- client picker -->
+      <div class="input-field col s12">
+        <select name="assignedToClient">
+          <option value="" disabled selected>Select client </option>
+          <% clients.forEach(client => { %>
+          <option value="<%= client._id %>"><%= client.name%></option>
+          <% }); %>
+        </select>
+        <label>Client</label>
+      </div>
+
+      <div class="input-field col s12">
+        <input type="text" name="notes" />
+        <label for="notes">Notes</label>
+      </div>
+      <button class="waves-effect blue darken-3 btn">Create</button>
+      <a href="javascript:history.back()" class="waves-effect blue darken-3 btn">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<!-- Date picker initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems);
+  });
+</script>
+
+<!-- Time picker initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.timepicker');
+    var instances = M.Timepicker.init(elems, { twelveHour: false });
+  });
+</script>
+
+<!-- Multiple select initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+  });
+</script>
+
+<% include ../partials/footer %>

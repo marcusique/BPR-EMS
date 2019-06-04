@@ -1,0 +1,78 @@
+<% include ../partials/header %>
+<h1>Notifications</h1>
+
+<%if(notifications == undefined || notifications.length == 0){%>
+<p class="flow-text" id="noNotifications">
+  You are all caught up! <i class="material-icons small">done_all</i>
+</p>
+
+<%} else if(!notifications == undefined || !notifications.length == 0){%>
+<div class="row">
+  <ul class="collapsible col s8 l4 offset-l4 offset-s2">
+    <% notifications.forEach(n =>{ %>
+    <li>
+      <div class="collapsible-header">
+        <i class="material-icons">info_outline</i><%=n.applicant.firstName%> is
+        applying to <%=n.task.name%>
+      </div>
+      <div class="collapsible-body">
+        <p>
+          <strong>Task: </strong> <%=n.task.name%><br />
+          <strong>Date: </strong>
+          <%=n.task.date.toString().substring(0,16)%><br />
+          <strong>Required staff: </strong> <%=n.task.requiredStaff%><br />
+          <strong>Currently enrolled: </strong>
+          <%n.task.enrolledStaff.forEach(s => {%>
+          <a class="css-button-rounded"><%= s.firstName %></a>%> <%})%>
+          <br />
+          Click <a href="/tasks/<%=n.task._id%>">here</a> for more details
+        </p>
+        <div id="notification">
+          <form
+            class="col l3"
+            action="/notifications/<%=n._id%>/approve/?_method=PUT"
+            method="POST"
+          >
+            <input type="hidden" name="taskId" value="<%=n.task._id%>" />
+            <input
+              type="hidden"
+              name="applicantId"
+              value="<%=n.applicant._id%>"
+            />
+            <button class="waves-effect blue darken-3 btn-small" type="submit">
+              Approve
+            </button>
+          </form>
+          <form
+            class="col l3"
+            action="/notifications/<%=n._id%>/decline/?_method=PUT"
+            method="POST"
+          >
+            <input type="hidden" name="taskId" value="<%=n.task._id%>" />
+            <input
+              type="hidden"
+              name="applicantId"
+              value="<%=n.applicant._id%>"
+            />
+            <button
+              class="waves-effect deep-orange darken-3 btn-small"
+              type="submit"
+            >
+              Decline
+            </button>
+          </form>
+        </div>
+      </div>
+    </li>
+    <%})%> <%}%>
+  </ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.collapsible');
+      var instances = M.Collapsible.init(elems);
+    });
+  </script>
+
+  <% include ../partials/footer %>
+</div>

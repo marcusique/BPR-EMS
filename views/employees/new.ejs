@@ -1,0 +1,97 @@
+<% include ../partials/header %>
+<h3 class="newFormHeading">Create new employee</h3>
+
+<div class="row">
+  <form
+    class="col s6 offset-s3"
+    action="/employees/new"
+    method="POST"
+    id="new-employee-form"
+  >
+    <div class="row">
+      <div class="input-field col s6" id="fname">
+        <input type="text" name="firstName" class="validate" />
+        <label for="firstName">First Name</label>
+      </div>
+      <div class="input-field col s6" id="lname">
+        <input type="text" name="lastName" class="validate" />
+        <label for="lastName">Last Name</label>
+      </div>
+      <div class="input-field col s6" id="username">
+        <input
+          placeholder="Username"
+          type="text"
+          name="username"
+          class="validate"
+        />
+        <label for="username">Username</label>
+      </div>
+      <div class="input-field col s6">
+        <select name="userRole" type="text">
+          <option value="" disabled selected>Select user role</option>
+          <option value="Cleaner">Cleaner</option>
+          <option value="Manager">Manager</option>
+          <option value="Admin">Admin</option>
+        </select>
+        <label>User role</label>
+      </div>
+
+      <div class="input-field col s6">
+        <input type="text" name="postalCode" class="validate" />
+        <label for="postalCode">Postal code</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="city" class="validate" />
+        <label for="city">City</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="addressLine" class="validate" />
+        <label for="addressLine">Address</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" name="phoneNumber" class="validate" />
+        <label for="phoneNumber">Phone number</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="email" name="email" class="validate" />
+        <label for="email">Email</label>
+      </div>
+      <div class="input-field col s6">
+        <input type="password" name="password" class="validate" />
+        <label for="password">Password</label>
+      </div>
+      <button type="submit" class="waves-effect blue darken-3 btn">
+        Create
+      </button>
+      <a href="javascript:history.back()" class="waves-effect blue darken-3 btn">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<!--Select user role-->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let elems = document.querySelectorAll('select');
+    let instances = M.FormSelect.init(elems);
+  });
+</script>
+
+<!--Generate username-->
+<script>
+  function createUsername() {
+    let fname = $('#fname input[name=firstName]')
+      .val()
+      .substring(0, 1)
+      .toLowerCase();
+
+    let lname = $('#lname input[name=lastName]')
+      .val()
+      .toLowerCase();
+    let username = fname + lname;
+    $('#username input[name=username]').val(username);
+  }
+
+  $('#fname input[name=firstName]').on('keyup', createUsername);
+  $('#lname input[name=lastName]').on('keyup', createUsername);
+</script>
+<% include ../partials/footer %>

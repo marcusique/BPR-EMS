@@ -1,0 +1,227 @@
+/* LANDING PAGE START */
+.greeting {
+  text-align: center;
+  color: black;
+  /* background-color: #1565c0; */
+}
+
+.login-form {
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form > a {
+  color: black;
+  display: inline-block;
+}
+
+/* LANDING PAGE END */
+
+.newFormHeading {
+  text-align: center;
+}
+
+#noNotifications{
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+.row .input-field input:focus {
+  border-bottom: 1px solid #1565c0 !important;
+  box-shadow: 0 1px 0 0 #1565c0 !important;
+}
+
+.input-field input:focus + label {
+  color: #1565c0 !important;
+}
+
+select option {
+  background-color: #1565c0 !important;
+}
+
+#toast-container {
+  top: auto !important;
+  left: auto !important;
+  bottom: 10%;
+  right: 7%;
+}
+
+#notificationContainer {
+  display: inline-flex;
+}
+
+#notification {
+  display: inline-flex;
+}
+
+/* Calendar CSS
+table,
+th,
+td {
+  border: 1px solid black;
+}
+*/
+
+#calendar,
+#Cth {
+  border: 1px solid black;
+}
+
+.td-day {
+  height: 100px;
+  width: 100px;
+  vertical-align: top;
+  border: 1px solid black;
+}
+
+#monthAndYear {
+  text-align: center;
+
+  display: inline-block;
+}
+
+#next,
+#previous {
+  color: black;
+}
+#selectYear {
+  display: inline-flex;
+  float: right;
+
+  overflow: paged-x;
+}
+/* task*/
+#taskMain {
+  min-height: 100px;
+  height: 100%;
+  border-radius: 10px;
+}
+
+#innerTask {
+  height: 30%;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+.textField > strong {
+  padding-left: 20px;
+  margin-top: 20px;
+}
+.chip {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.textField > div {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+/*comments*/
+#comments {
+  height: 30%;
+  border: 1px solid gray;
+  border-radius: 10px;
+  overflow: hidden;
+}
+#commentText {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+#post {
+  margin-left: 80px;
+  display: flex;
+}
+#postButton {
+  margin-top: 10px;
+}
+
+.card-title {
+  text-align: center;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  color: red;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.deleteButton:hover {
+  color: orangered;
+}
+.td-day {
+  position: relative;
+}
+.css-day-text {
+  float: left;
+  font-weight: bold;
+  top: 0;
+  position: absolute;
+  margin-bottom: 4px !important;
+}
+.css-button-rounded {
+  background: lightgray;
+  color: black;
+  /* float: right; */
+  padding: 2px;
+  display: inline-block;
+  text-align: center;
+  width: border-box;
+  border-radius: 8px;
+  margin-top: 2px;
+}
+
+#getLaborHoursButton {
+  padding-right: 10px;
+}
+.buttonsContainer {
+  display: flex;
+  margin: 10px;
+}
+
+#CommentButton {
+  margin-left: 20px;
+}
+#editTaskButton {
+  display: inline-flex;
+}
+.taskMainHeader {
+  text-align: center;
+}
+.responsiveImage {
+  width: 60%;
+  max-height: 53px;
+  margin-left: 20px;
+}
+.css-week-text
+{
+    float:right;
+    position: absolute;
+    right:0;
+    top:0;
+    margin-right: 4px;
+
+
+    color: gray;
+    margin-bottom: 4px !important;
+}
+
+
+@media screen and (max-width: 600px) {
+
+  #calendar,
+  #Cth {
+    border: 1px solid black;
+
+  }
+
+  .td-day {
+    height: 50px;!important;
+
+    width: 50px;
+    vertical-align: top;
+
+  }
+}

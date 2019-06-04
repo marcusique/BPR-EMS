@@ -1,0 +1,83 @@
+<% include ../partials/header %>
+<h4>Edit client</h4>
+
+<div class="row">
+  <form
+    class="col s6 offset-s3"
+    action="/clients/<%=client._id%>/?_method=PUT"
+    method="POST"
+    id="new-client-form"
+  >
+    <div class="row">
+      <div class="input-field col s6" id="fname">
+        <input
+          type="text"
+          name="client[name]"
+          class="validate"
+          value="<%=client.name%>"
+        />
+        <label for="name">Name</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="client[address.postalCode]"
+          class="validate"
+          value="<%=client.address.postalCode%>"
+        />
+        <label for="postalCode">Postal code</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="client[address.city]"
+          class="validate"
+          value="<%=client.address.city%>"
+        />
+        <label for="city">City</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="client[address.addressLine]"
+          class="validate"
+          value="<%=client.address.addressLine%>"
+        />
+        <label for="addressLine">Address</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="text"
+          name="client[phoneNumber]"
+          class="validate"
+          value="<%=client.phoneNumber%>"
+        />
+        <label for="phoneNumber">Phone number</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          type="email"
+          name="client[email]"
+          class="validate"
+          value="<%=client.email%>"
+        />
+        <label for="email">Email</label>
+      </div>
+      <button class="waves-effect blue darken-3 btn">Update</button>
+      <a href="javascript:history.back()" class="waves-effect blue darken-3 btn">Cancel</a>
+    </div>
+  </form>
+  <form
+    class="col s6 offset-s3"
+    action="/clients/<%= client._id %>?_method=DELETE"
+    method="POST"
+  >
+    <div class="row">
+      <button class="waves-effect deep-orange darken-3 btn">
+        Delete client
+      </button>
+    </div>
+  </form>
+</div>
+
+<% include ../partials/footer %>

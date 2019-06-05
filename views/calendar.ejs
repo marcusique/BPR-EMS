@@ -108,7 +108,7 @@
 
         </div>
         <% if(task){ %>
-            <div class="card col l4 pull-l0" id="taskMain">
+            <div class="card col l4" id="taskMain">
                 <div class="taskMainHeader">
                     <h4 class=" mainTaskName"><%= task.name %>
                         <% if(currentUser && currentUser.userRole == 'Admin' || currentUser &&
@@ -156,7 +156,7 @@
                                 <button class="waves-effect blue darken-3 btn-small">Apply</button>
                             </form>
                         <% } else { %>
-                            <button disabled>Applied</button>
+                            <button class="btn disabled">Applied</button>
                         <% } %>
                         <!-- END : CHECK IF CURRENT USER HAS ALREADY APPLIED FOR A TASK -->
 
@@ -168,7 +168,7 @@
                     </div>
 
                 </div>
-                <div class="card " id="comments">
+                <div class="card" id="comments">
                     <h4 class="card-title">Comments</h4>
                     <p>
                         <% task.comments.forEach(comment => { %>
@@ -184,13 +184,19 @@
                     </div>
 
                     <% }) %>
-                    <form class="col s8" id="post" action="/tasks/<%= task._id %>/comments" method="POST">
+                    <form class="col s8 l9" id="post" action="/tasks/<%= task._id %>/comments" method="POST">
+                        <div class="input-field" >
                         <input class="materialize-textarea" type="text" name="comment[text]"
-                               placeholder="Type a new comment..."></input>
+                               placeholder="Type a new comment...">
+                        </input>
+                        <div class="col l8 offset-l8 offset-s7">
                         <button id="CommentButton" class="waves-effect blue darken-3 btn-small" type="submit"
                                 id="postButton">
-                            <i class="material-icons right">send</i>
+                            Post
                         </button>
+                        </div>
+                        
+                    </div>
                     </form>
                     </p>
                 </div>

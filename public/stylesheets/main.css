@@ -44,9 +44,7 @@ select option {
 #toast-container {
   top: auto !important;
   left: auto !important;
-
   bottom: 10%;
-
 }
 
 #notificationContainer {
@@ -56,14 +54,6 @@ select option {
 #notification {
   display: inline-flex;
 }
-
-/* Calendar CSS
-table,
-th,
-td {
-  border: 1px solid black;
-}
-*/
 
 #calendar,
 #Cth {
@@ -132,9 +122,9 @@ td {
   margin-left: 80px;
   display: flex;
 }
-#postButton {
+/* #postButton {
   margin-top: 10px;
-}
+} */
 
 .card-title {
   text-align: center;

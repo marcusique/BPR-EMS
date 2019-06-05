@@ -29,7 +29,7 @@
       <div class="col l12 m12 s12 greeting">
         <h2>Password reset</h2>
         <h6>enter your new password</h6>
-        <div class="loginForm col l4 m5 s5 offset-l4 offset-m4 offset-s3">
+        <div class="loginForm col l4 m6 s12 offset-l4 offset-m4 offset">
           <form action="/reset/<%= token %>" method="POST">
             <div class="input-field">
               <label for="password">New Password</label>
@@ -39,11 +39,14 @@
               <label for="confirm">Confirm Password</label>
               <input type="password" name="confirm" value="" />
             </div>
-            <div>
+            <div class="col s12">
               <button type="submit" class="btn-small white black-text">
                 Update Password
               </button>
-              <a href="javascript:history.back()" class="btn-small white black-text">
+              <a
+                href="/"
+                class="btn-small white black-text"
+              >
                 Cancel
               </a>
             </div>

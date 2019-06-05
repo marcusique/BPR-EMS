@@ -1,7 +1,7 @@
 const express = require('express'),
   router = express.Router({ mergeParams: true }),
   Employee = require('../models/employee'),
-  //passport = require('passport'),
+  Notification = require('../models/notification'),
   { check, validationResult } = require('express-validator/check'),
   middleware = require('../middleware/index');
 
@@ -164,15 +164,27 @@ router.delete(
   middleware.isLoggedIn,
   middleware.checkEmployeeDirectoryAuthorization,
   (req, res) => {
-    Employee.findByIdAndRemove(req.params.id, err => {
-      if (err) {
-        req.flash('error', 'Error. Please try again');
-        res.redirect('back');
-      } else {
-        req.flash('success', 'Employee removed');
-        res.redirect('/employees');
-      }
-    });
+    if (req.user._id == req.params.id) {
+      req.flash('error', 'Error. You cannot delete your own accout');
+      res.redirect('back');
+    } else {
+      Employee.findByIdAndRemove(req.params.id, err => {
+        if (err) {
+          req.flash('error', 'Error. Please try again');
+          res.redirect('back');
+        } else {
+          Notification.deleteMany({ applicant: req.params.id }, err => {
+            if (err) {
+              req.flash('error', 'Error has occured. Please try again');
+              res.redirect('back');
+            } else {
+              req.flash('success', 'Employee removed');
+              res.redirect('/employees');
+            }
+          });
+        }
+      });
+    }
   }
 );
 

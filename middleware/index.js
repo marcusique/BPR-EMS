@@ -7,7 +7,7 @@ middlewareObj.isLoggedIn = (req, res, next) => {
   }
 
   req.flash('error', 'Please log in first');
-  res.redirect('/');
+  res.status(401).render('landing');
 };
 
 middlewareObj.checkCommentOwnership = (req, res, next) => {

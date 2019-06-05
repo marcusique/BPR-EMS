@@ -21,7 +21,7 @@
   text-align: center;
 }
 
-#noNotifications{
+#noNotifications {
   text-align: center;
 }
 
@@ -195,33 +195,27 @@ td {
   max-height: 53px;
   margin-left: 20px;
 }
-.css-week-text
-{
-    float:right;
-    position: absolute;
-    right:0;
-    top:0;
-    margin-right: 4px;
+.css-week-text {
+  float: right;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-right: 4px;
 
-
-    color: gray;
-    margin-bottom: 4px !important;
+  color: gray;
+  margin-bottom: 4px !important;
 }
 
-
 @media screen and (max-width: 600px) {
-
   #calendar,
   #Cth {
     border: 1px solid black;
-
   }
 
   .td-day {
-    height: 50px;!important;
+    height: 50px !important;
 
     width: 50px;
     vertical-align: top;
-
   }
 }

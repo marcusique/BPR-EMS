@@ -39,7 +39,9 @@
   <body>
     <nav>
       <div class="nav-wrapper blue darken-3">
-        <a href="/calendar" class="brand-logo"><img class="responsiveImage" src="/logo.png"/></a>
+        <a href="/calendar" class="brand-logo"
+          ><img class="responsiveImage" src="/logo.png"
+        /></a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"
           ><i class="material-icons">menu</i></a
         >
@@ -48,30 +50,37 @@
           currentUser.userRole == 'Manager') {%>
           <li>
             <a href="/employees"
-              ><i title="Employee directory" class="material-icons left">person</i>Employee Directory</a
+              ><i title="Employee directory" class="material-icons left"
+                >person</i
+              >Employee Directory</a
             >
           </li>
           <li>
             <a href="/clients"
-              ><i title="Client directory" class="material-icons left">group</i>Client Directory</a
+              ><i title="Client directory" class="material-icons left">group</i
+              >Client Directory</a
             >
           </li>
           <li>
             <a href="/tasks"
-              ><i title="Task directory" class="material-icons left">assignment</i>Task Directory</a
+              ><i title="Task directory" class="material-icons left"
+                >assignment</i
+              >Task Directory</a
             >
           </li>
-          
+
           <li>
             <a href="/notifications"
-              ><i title="Notifications" class="material-icons left">notifications</i></a
+              ><i title="Notifications" class="material-icons left"
+                >notifications</i
+              ></a
             >
           </li>
           <%}%>
           <li>
             <a href="/logout"
-              ><i title="Logout" class="material-icons left">exit_to_app</i>Logout from
-              <strong><%=currentUser.username%></strong></a
+              ><i title="Logout" class="material-icons left">exit_to_app</i
+              >Logout from <strong><%=currentUser.username%></strong></a
             >
           </li>
         </ul>
@@ -100,7 +109,8 @@
       </li>
       <li>
         <a href="/logout">
-          <i class="material-icons left">exit_to_app</i>Logout
+          <i class="material-icons left">exit_to_app</i>Logout from
+          <strong><%=currentUser.username%></strong>
         </a>
       </li>
     </ul>

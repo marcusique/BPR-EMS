@@ -200,8 +200,33 @@ describe.skip('Test with supertest-session/postAuth/cleaner [TS_2]', function ()
         .end(done)
     });
 
-    it('should POST a comment tied to the task [2_22]');
+    it('should POST a comment tied to the task [2_22]', function(done){
+        authSession.post('/tasks/5cf4dc754cfcf37e38642e70/comments')
+        .send({comment: {text: 'testComment'}})
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
+    });
 
-    it('should DELETE own comment tied to the task [2_23]'); 
+    it('should DELETE own comment tied to the task [2_23]', function(done){
+        authSession.delete('/tasks/5cf4dc754cfcf37e38642e70/comments/5cf7ba387325621bf4fb0af8')
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
+    });
+    
+    it('should be able to apply for a task [2_24]', function(done){
+        authSession.post('/tasks/5cf4dc754cfcf37e38642e70/apply')
+        .send({taskId: '5cf4dc754cfcf37e38642e70'})
+        .expect(302)
+        .expect('location', '/')
+        .end(done)
+    });
+
+    it('should return 404 with invalid route [2_25]', function(done){
+        authSession.get('/invalid/route')
+        .expect(404)
+        .end(done)
+    });
 
 });

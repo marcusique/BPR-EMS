@@ -10,7 +10,7 @@ describe.skip('Test with supertest-session/postAuth/admin [TS_4]', function () {
         testSession = session(app);
         testSession
         .post('/login')
-        .send({ username: 'majtay', password: 'test' })
+        .send({ username: 'vbottas', password: 'test' })
         .expect(302)
         .expect('Location', '/calendar')
         .end(function (err) {
@@ -53,11 +53,27 @@ describe.skip('Test with supertest-session/postAuth/admin [TS_4]', function () {
         .end(done)
     });
 
-    it('should POST a comment tied to the task [4_6]');
+    it('should POST a comment tied to the task [4_6]', function(done){
+        authSession.post('/tasks/5cf4dc754cfcf37e38642e70/comments')
+        .send({comment: {text: 'testComment'}})
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
+    });
 
-    it('should DELETE own comment tied to the task [4_7]');
+    it('should DELETE own comment tied to the task [4_7]', function(done){
+        authSession.delete('/tasks/5cf4dc754cfcf37e38642e70/comments/5cf7bbf8a474b526c82129b7')
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
+    });
 
-    it('should DELETE all comments tied to the task [4_8]');
+    it('should DELETE own comment tied to the task [4_8]', function(done){
+        authSession.delete('/tasks/5cf4dc754cfcf37e38642e70/comments/5cf7bb39f056994c442964e3')
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
+    });
     
     /* --- Employee Directory --- */
     
@@ -93,8 +109,8 @@ describe.skip('Test with supertest-session/postAuth/admin [TS_4]', function () {
     });
 
     it('should update employee info (PUT) [4_12]', function(done){ 
-        authSession.put('/employees/5cd4142e4696097920bd3683')
-        .send({phoneNumber: '12345678'})
+        authSession.put('/employees/5ca71ed123a215302999a559')
+        .send({employee: {phoneNumber: '12345678'}})
         .expect(302)
         .expect('location', '/employees')
         .end(done);
@@ -197,6 +213,28 @@ describe.skip('Test with supertest-session/postAuth/admin [TS_4]', function () {
         .expect(302)
         .expect('location', '/tasks')
         .end(done);
+    });
+
+    it('should be able to apply for a task [4_24]', function(done){
+        authSession.post('/tasks/5cf4dc754cfcf37e38642e70/apply')
+        .send({taskId: '5cf4dc754cfcf37e38642e70'})
+        .expect(302)
+        .expect('location', '/')
+        .end(done)
+    });
+
+    it('should return 404 with invalid route [4_25]', function(done){
+        authSession.get('/invalid/route')
+        .expect(404)
+        .end(done)
+    });
+
+    it('should assign labor hours [4_26]', function(done){
+        authSession.post('/tasks/5cf4dc754cfcf37e38642e70/assignLaborHours')
+        .send({ '5cf78b3abf2360f74c14b552': '3' })
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
     });
 
 });

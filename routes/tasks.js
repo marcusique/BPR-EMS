@@ -276,6 +276,7 @@ router.post(
   middleware.isLoggedIn,
   middleware.checkTaskAuthorization,
   (req, res) => {
+    console.log(req.body)
     Task.findById(req.params.id, (err, foundDate) => {
       if (err) {
         req.flash('error', 'Error. Please try again');
@@ -294,7 +295,7 @@ router.post(
       }
     });
 
-    res.redirect('back');
+    res.redirect('/tasks/' + req.params.id);
   }
 );
 module.exports = router;

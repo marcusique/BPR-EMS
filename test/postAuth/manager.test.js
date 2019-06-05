@@ -53,11 +53,27 @@ describe.skip('Test with supertest-session/postAuth/manager [TS_3]', function ()
         .end(done)
     });
 
-    it('should POST a comment tied to the task [3_6]');
+    it('should POST a comment tied to the task [3_6]', function(done){
+        authSession.post('/tasks/5cf4dc754cfcf37e38642e70/comments')
+        .send({comment: {text: 'testComment'}})
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
+    });
 
-    it('should DELETE own comment tied to the task [3_7]');
+    it('should DELETE own comment tied to the task [3_7]', function(done){
+        authSession.delete('/tasks/5cf4dc754cfcf37e38642e70/comments/5cf7bbf8a474b526c82129b7')
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
+    });
 
-    it('should DELETE all comments tied to the task [3_8]');
+    it('should DELETE own comment tied to the task [3_8]', function(done){
+        authSession.delete('/tasks/5cf4dc754cfcf37e38642e70/comments/5cf7bb39f056994c442964e3')
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
+    });
     
     /* --- Employee Directory --- */
     
@@ -201,6 +217,28 @@ describe.skip('Test with supertest-session/postAuth/manager [TS_3]', function ()
         .expect(302)
         .expect('location', '/tasks')
         .end(done);
+    });
+
+    it('should be able to apply for a task [3_24]', function(done){
+        authSession.post('/tasks/5cf4dc754cfcf37e38642e70/apply')
+        .send({taskId: '5cf4dc754cfcf37e38642e70'})
+        .expect(302)
+        .expect('location', '/')
+        .end(done)
+    });
+
+    it('should return 404 with invalid route [3_25]', function(done){
+        authSession.get('/invalid/route')
+        .expect(404)
+        .end(done)
+    });
+
+    it('should assign labor hours [3_26]', function(done){
+        authSession.post('/tasks/5cf4dc754cfcf37e38642e70/assignLaborHours')
+        .send({ '5cf7a27bbecc403e6486b241': '3' })
+        .expect(302)
+        .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
+        .end(done)
     });
 
 });

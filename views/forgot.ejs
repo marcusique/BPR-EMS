@@ -2,6 +2,44 @@
 <html>
   <head>
     <title>Employee Management System</title>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+      (function(m, e, t, r, i, k, a) {
+        m[i] =
+          m[i] ||
+          function() {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
+        m[i].l = 1 * new Date();
+        (k = e.createElement(t)),
+          (a = e.getElementsByTagName(t)[0]),
+          (k.async = 1),
+          (k.src = r),
+          a.parentNode.insertBefore(k, a);
+      })(
+        window,
+        document,
+        'script',
+        'https://mc.yandex.ru/metrika/tag.js',
+        'ym'
+      );
+
+      ym(53961634, 'init', {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true
+      });
+    </script>
+    <noscript
+      ><div>
+        <img
+          src="https://mc.yandex.ru/watch/53961634"
+          style="position:absolute; left:-9999px;"
+          alt=""
+        /></div
+    ></noscript>
+    <!-- /Yandex.Metrika counter -->
     <!--Import Google Icon Font-->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -29,7 +67,9 @@
       <div class="row">
         <div class="col l12 m10 s11 greeting">
           <h2>Password reset</h2>
-          <h6 class="flow-text">enter your email address to receive password reset link</h6>
+          <h6 class="flow-text">
+            enter your email address to receive password reset link
+          </h6>
           <div class="login-form col l4 m6 s9 offset-l4 offset-m4 offset-s2">
             <form action="/forgot" method="POST">
               <div class="input-field">
@@ -46,7 +86,11 @@
                   type="submit"
                   value="Reset"
                 />
-                <a href="javascript:history.back()" class="waves-effect white black-text btn-small">Cancel</a>
+                <a
+                  href="javascript:history.back()"
+                  class="waves-effect white black-text btn-small"
+                  >Cancel</a
+                >
               </div>
             </form>
           </div>

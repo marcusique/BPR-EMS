@@ -4,7 +4,7 @@ let session = require('supertest-session');
 let testSession = null;
 
 
-describe('Test with supertest-session/preAuth [TS_1]', function(){
+describe.skip('Test with supertest-session/preAuth [TS_1]', function(){
     beforeEach(function(){
         testSession = session(app);
     });
@@ -92,7 +92,7 @@ describe('Test with supertest-session/preAuth [TS_1]', function(){
     });
     // Password reset flow testing --END--
 
-    it('should return 404 with invalid route [1_?]', function(done){
+    it('should return 404 with invalid route [1_12]', function(done){
         testSession.get('/invalid/route')
         .expect(404)
         .end(done)

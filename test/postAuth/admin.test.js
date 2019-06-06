@@ -68,7 +68,7 @@ describe.skip('Test with supertest-session/postAuth/admin [TS_4]', function () {
         .end(done)
     });
 
-    it('should DELETE own comment tied to the task [4_8]', function(done){
+    it('should DELETE any comment tied to the task [4_8]', function(done){
         authSession.delete('/tasks/5cf4dc754cfcf37e38642e70/comments/5cf7bb39f056994c442964e3')
         .expect(302)
         .expect('location', '/tasks/5cf4dc754cfcf37e38642e70')
@@ -153,8 +153,8 @@ describe.skip('Test with supertest-session/postAuth/admin [TS_4]', function () {
     });
 
     it('should update client info (PUT) [4_17]', function(done){ 
-        authSession.put('/clients/5cac75020d93cb2b171ac9a5')
-        .send({phoneNumber: '12345678'})
+        authSession.put('/clients/5ce40d814018a744d4889425')
+        .send({client: {phoneNumber: '12345678'}})
         .expect(302)
         .expect('location', '/clients')
         .end(done);
@@ -201,8 +201,8 @@ describe.skip('Test with supertest-session/postAuth/admin [TS_4]', function () {
     });
 
     it('should update task details (PUT) [4_22]', function(done){ 
-        authSession.put('/tasks/5cb07423db2c91c92d71e363')
-        .send({laborHours: '10'})
+        authSession.put('/tasks/5cf4dc754cfcf37e38642e70')
+        .send({task: {laborHours: '3'}})
         .expect(302)
         .expect('location', '/tasks')
         .end(done);

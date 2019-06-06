@@ -40,9 +40,6 @@ router.post(
   middleware.isLoggedIn,
   middleware.checkNewClientAuthorization,
   [
-    check('name')
-      .isEmpty()
-      .withMessage('Name cannot be empty'),
     check('phoneNumber')
       .isNumeric()
       .withMessage('Phone number must contain digits only')
@@ -58,8 +55,6 @@ router.post(
     check('email')
       .isEmail()
       .withMessage('Enter a valid email')
-      .isEmpty()
-      .withMessage('Email cannot be empty')
       .normalizeEmail({ all_lowercase: true })
       .trim()
   ],

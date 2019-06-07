@@ -147,22 +147,10 @@ router.put(
 );
 
 /* Remove an employee */
-
-//TESTING
-// router.delete('/:id', middleware.isLoggedIn, /*middleware.checkCommentOwnership,*/ middleware.checkNewEmployeeAuthorization, (req, res) => {
-//   Employee.findByIdAndRemove(req.params.id, err => {
-//     if (err) {
-//       res.redirect('/employees');
-//     } else {
-//       req.flash('success', 'Employee removed');
-//       res.redirect('/employees');
-//     }
-//   });
-// });
 router.delete(
   '/:id',
   middleware.isLoggedIn,
-  middleware.checkEmployeeDirectoryAuthorization,
+  middleware.checkNewEmployeeAuthorization,
   (req, res) => {
     if (req.user._id == req.params.id) {
       req.flash('error', 'Error. You cannot delete your own accout');
